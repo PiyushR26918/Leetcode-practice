@@ -1,0 +1,65 @@
+class Solution {
+    public int orangesRotting(int[][] grid) {
+        int freshOranges = 0;
+        int minute = 0;
+        boolean madeRotten = false;
+        Queue<int[]> queue = new LinkedList<>();
+        for(int i=0; i<grid.length; i++){
+            for (int j=0; j<grid[0].length; j++){
+                if (grid[i][j] == 2){
+                    int[] arr = new int[2];
+                    arr[0] = i;
+                    arr[1] = j;
+                    queue.add(arr);
+                }
+                else if (grid[i][j] == 1){
+                    freshOranges++;
+                }
+            }
+        }
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            madeRotten = false;
+            for (int i=0; i<size; i++){
+                
+                int[] orangePosition = queue.poll();
+                int orangeRow = orangePosition[0];
+                int orangeCol = orangePosition[1];
+                
+                if (orangeRow>0 && grid[orangeRow-1][orangeCol] == 1){// move up
+                    grid[orangeRow-1][orangeCol] = 2;
+                    queue.add(new int[]{orangeRow-1,orangeCol});
+                    madeRotten = true;
+                    freshOranges--;
+                }
+                if (orangeRow<grid.length-1 && grid[orangeRow+1][orangeCol] == 1){// move down
+                    grid[orangeRow+1][orangeCol] = 2;
+                    queue.add(new int[]{orangeRow+1,orangeCol});
+                    madeRotten = true;
+                    freshOranges--;
+                }
+                if (orangeCol>0 && grid[orangeRow][orangeCol-1] == 1){// move left
+                    grid[orangeRow][orangeCol-1] = 2;
+                    queue.add(new int[]{orangeRow,orangeCol-1});
+                    madeRotten = true;
+                    freshOranges--;
+                }
+                if (orangeCol<grid[0].length-1 && grid[orangeRow][orangeCol+1] == 1){//move right
+                    grid[orangeRow][orangeCol+1] = 2;
+                    queue.add(new int[]{orangeRow, orangeCol+1});
+                    madeRotten = true;
+                    freshOranges--;
+                }
+                
+            }
+            if (madeRotten == true){
+                minute++;
+            }
+            
+        }
+        if (freshOranges != 0){
+            return -1;
+        }
+        return minute;
+    }
+}
