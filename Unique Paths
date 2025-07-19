@@ -1,0 +1,23 @@
+class Solution {
+    
+    public int uniquePaths(int m, int n) {
+        Integer[][] grid = new Integer[m][n];
+        return helper(0, 0, m, n,grid);
+        
+    }
+    public int helper(int row, int column,int m, int n,Integer[][] grid){
+        if (row == m || column == n){
+            return 0;
+        }
+        if (grid[row][column] != null){
+            return grid[row][column];
+        }
+        if (row == m-1 && column == n-1){
+            return 1;
+        }
+        int down = helper(row + 1, column, m, n,grid);
+        int right = helper(row, column + 1, m, n,grid);
+        grid[row][column] = down + right;
+        return down + right;
+    }
+}
