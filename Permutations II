@@ -1,0 +1,30 @@
+class Solution {
+    public List<List<Integer>> permuteUnique(int[] nums) {
+        List<List<Integer>> bigList = new ArrayList<>();
+        List<Integer> smallList = new ArrayList<>();
+        boolean[] visited = new boolean[nums.length];
+        helper (bigList,smallList, visited, nums);
+        return bigList;
+    }
+    void helper (List<List<Integer>> bigList, List<Integer> smallList, boolean[] visited, int[] nums){
+        if (smallList.size() == nums.length){
+            if (!bigList.contains(smallList)){
+                bigList.add(new ArrayList<Integer>(smallList));
+            } 
+            return;
+        }
+
+        for (int i=0; i<nums.length; i++){
+            if (visited[i] == false){
+                visited[i] = true;
+                smallList.add(nums[i]);
+                helper(bigList, smallList, visited, nums);
+                visited[i] = false;
+                smallList.remove(smallList.size() - 1);
+            }
+            
+        }
+        
+        
+    }   
+}
