@@ -1,0 +1,20 @@
+class Solution {
+    public int rob(int[] nums) {
+    Integer[] dp = new Integer[nums.length];
+    return helper(nums, 0, dp);     
+        
+    }
+    int helper(int[] nums, int houseNo, Integer[] dp){
+        if (houseNo >= nums.length){
+            return 0;
+        }
+        if (dp[houseNo] != null){
+            return dp[houseNo];
+        }
+        int pick = nums[houseNo] + helper(nums, houseNo+2, dp);
+        int leave = helper(nums,houseNo+1, dp);
+        dp[houseNo] = Math.max(pick,leave);
+        return Math.max(pick, leave);    
+        
+    }
+}
