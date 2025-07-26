@@ -1,0 +1,23 @@
+class Solution {
+    public boolean canJump(int[] nums) {
+        Boolean[] dp = new Boolean[nums.length];
+        return helper(nums, 0, dp);    
+    }
+    public boolean helper(int[] nums, int position, Boolean[] dp){
+        if (position >= nums.length-1){
+            return true;
+        }
+        if (dp[position] != null){
+            return dp[position];
+        } 
+        int maxJump = Math.min(nums[position], nums.length-position-1);
+        for (int i=1; i<=maxJump; i++){
+            if (helper(nums, position+i, dp)){
+                return true;
+            }
+            
+        }
+        dp[position] = false; 
+        return false;
+    }
+}
